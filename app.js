@@ -14,19 +14,25 @@ var users = {
   root:"root"
 };
 
+var c = 0;
+
 app.set('view engine', 'ejs');
 
 // POST /login gets urlencoded bodies
 app.post('/login', urlencodedParser, function(req, res) {
+
   if ((req.body.username == "") | (req.body.contra == "")) {
      res.send('Faltan campos por rellenar');
   } else {
     for (user in users) {
       if (req.body.username == user & req.body.contra == users[user]) {
         res.send('Has hecho login con el usuario ' + req.body.username);
+        c = 1;
       }
     }
-    res.send('Credenciales incorrectas');
+    if (c == 0) {
+      res.send('Credenciales incorrectas');
+    }
   }
 });
 
