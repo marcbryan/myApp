@@ -7,26 +7,27 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 //parse application/json
 var jsonParser = bodyParser.json();
 
-// Usuarios
-var u1 = {username:"marcbryan", password:1234};
-var u2 = {username:"prueba", password:"prueba"};
-var u3 = {username:"root", password:"root"};
-
-
+// Un diccionario de Usuarios (clave:valor)
 var users = {
   marc:"1234",
-  prueba:"4567"
+  prueba:"4567",
+  root:"root"
 };
 
 app.set('view engine', 'ejs');
 
 // POST /login gets urlencoded bodies
 app.post('/login', urlencodedParser, function(req, res) {
-  // if (req.body.username == 'marcbryan'){
-  //   console.log('hola');
-  // }
-  if(!req.body) return res.sendStatus(400);
-  res.send('Welcome ' + req.body.username);
+  if ((req.body.username == "") | (req.body.contra == "")) {
+     res.send('Faltan campos por rellenar');
+  } else {
+    for (user in users) {
+      if (req.body.username == user & req.body.contra == users[user]) {
+        res.send('Has hecho login con el usuario ' + req.body.username);
+      }
+    }
+    res.send('Credenciales incorrectas');
+  }
 });
 
 app.get('/login', function (req, res) {
