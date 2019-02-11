@@ -28,6 +28,7 @@ app.post('/login', urlencodedParser, function(req, res) {
       if (req.body.username == user & req.body.contra == users[user]) {
         res.send('Has hecho login con el usuario ' + req.body.username);
         c = 1;
+        return;
       }
     }
     if (c == 0) {
@@ -45,6 +46,25 @@ app.post('/api/users', jsonParser, function (req, res) {
   req.body = {username:marcbryan};
   if (!req.body)
     return res.sendStatus(400);
+});
+/*
+app.get('/login/:user/:password', function (req, res) {
+  res.send(req.params.user+" "+req.params.password);
+});*/
+
+app.post('/login/:user/:password', function (req, res) {
+  console.log("POST");
+  for (user in users) {
+    console.log(user);
+    if (req.params.user == user & req.params.password == users[user]) {
+      var status = {"status":"OK"};
+      res.send(JSON.stringify(status));
+      return;
+    }
+  }
+  var status = {};
+  status = "ERROR";
+  res.send(JSON.stringify(status));
 });
 
 //Ruta '/' -> muestra la plantilla login.ejs (un input y un botón de submit)
