@@ -52,10 +52,8 @@ app.get('/login/:user/:password', function (req, res) {
   res.send(req.params.user+" "+req.params.password);
 });*/
 
-app.post('/login/:user/:password', function (req, res) {
-  console.log("POST");
+app.get('/login/:user/:password', function (req, res) {
   for (user in users) {
-    console.log(user);
     if (req.params.user == user & req.params.password == users[user]) {
       var status = {"status":"OK"};
       res.send(JSON.stringify(status));
