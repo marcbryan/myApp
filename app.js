@@ -23,7 +23,7 @@ const pool = new Pool({
 });
 
 app.get('/db', async (req, res) => {
-  res.render(db);
+  res.render("db");
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
