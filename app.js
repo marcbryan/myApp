@@ -16,6 +16,8 @@ var users = {
 
 var c = 0;
 
+app.set('view engine', 'ejs');
+
 const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -27,6 +29,9 @@ app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
+      var users = result.usuario;
+      console.log('Result: '+result);
+      console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
       console.log(results);
       //res.render('pages/db', results );
@@ -35,9 +40,7 @@ app.get('/db', async (req, res) => {
       console.error(err);
       res.send("Error " + err);
     }
-  })
-
-app.set('view engine', 'ejs');
+});
 
 // POST /login gets urlencoded bodies
 app.post('/login', urlencodedParser, function(req, res) {
