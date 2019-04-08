@@ -29,7 +29,7 @@ app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
-      var users = result.usuario;
+      var users = results[0];
       console.log('Result: '+result);
       console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
