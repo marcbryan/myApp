@@ -33,7 +33,7 @@ app.get('/db', async (req, res) => {
       //console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
       console.log(results);
-      var user = results[0];
+      var user = JSON.parse(results);
       console.log('Users -> '+user);
       //res.render('pages/db', results );
       client.release();//*/
