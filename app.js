@@ -29,11 +29,12 @@ app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
-      var users = result[0];
-      console.log('Result: '+result);
+      //console.log('Result: '+result);
       console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
       console.log(results);
+      var user = results[0];
+      console.log('Users -> '+JSON.stringify(user));
       //res.render('pages/db', results );
       client.release();//*/
     } catch (err) {
