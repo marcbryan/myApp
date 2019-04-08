@@ -30,11 +30,11 @@ app.get('/db', async (req, res) => {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
       //console.log('Result: '+result);
-      console.log('Users -> '+users);
+      //console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
       console.log(results);
       var user = results[0];
-      console.log('Users -> '+JSON.stringify(user));
+      console.log('Users -> '+user);
       //res.render('pages/db', results );
       client.release();//*/
     } catch (err) {
