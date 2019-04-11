@@ -42,7 +42,9 @@ app.get('/db', async (req, res) => {
 
       var users = results['results'];
       for (user in users) {
-        console.log(users[user]);
+        //console.log(users[user]);
+        var usuario = users[user];
+        console.log('nombre: '+usuario.username+', pass:'+usuario.password);
       }
 
       //var user = JSON.parse(results);
