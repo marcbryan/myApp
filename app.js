@@ -32,8 +32,11 @@ app.get('/db', async (req, res) => {
       //console.log('Result: '+result);
       //console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
-      console.log(results);
+      //console.log(results);
       var keys = Object.keys(results);
+      for (item in keys){
+        console.log(keys[item]);
+      }
       console.log(keys);
       //var user = JSON.parse(results);
       //console.log('Users -> '+user);
