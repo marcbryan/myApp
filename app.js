@@ -40,7 +40,10 @@ app.get('/db', async (req, res) => {
       }*/
       //console.log(keys);
 
-      var usuarios = results['results'];
+      var users = results['results'];
+      for (user in users) {
+        console.log(users[user]);
+      }
       console.log(usuarios);
 
       //var user = JSON.parse(results);
