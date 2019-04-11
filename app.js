@@ -44,7 +44,6 @@ app.get('/db', async (req, res) => {
       for (user in users) {
         console.log(users[user]);
       }
-      console.log(usuarios);
 
       //var user = JSON.parse(results);
       //console.log('Users -> '+user);
