@@ -31,7 +31,7 @@ app.get('/db', async (req, res) => {
       const result = await client.query('SELECT * FROM usuarios');
       //console.log('Result: '+result);
       //console.log('Users -> '+users);
-      var results = { (result) ? result.rows : null};
+      const results = { (result) ? result.rows : null};
       console.log(results);
       //var user = JSON.parse(results);
       //console.log('Users -> '+user);
