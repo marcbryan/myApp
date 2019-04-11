@@ -35,7 +35,7 @@ app.get('/db', async (req, res) => {
       console.log(results);
       //var user = JSON.parse(results);
       //console.log('Users -> '+user);
-      //client.release();
+      client.release();
     } catch (err) {
       console.error(err);
       res.send("Error " + err);
