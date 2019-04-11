@@ -33,6 +33,7 @@ app.get('/db', async (req, res) => {
       //console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
       console.log(results);
+      console.console.log(results.length);
       //var user = JSON.parse(results);
       //console.log('Users -> '+user);
       client.release();
