@@ -29,26 +29,13 @@ app.get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
-      //console.log('Result: '+result);
-      //console.log('Users -> '+users);
       const results = { 'results': (result) ? result.rows : null};
-      //console.log(results);
-      //var keys = Object.keys(results);
-      /*
-      for (item in keys){
-        console.log(keys[item]);
-      }*/
-      //console.log(keys);
 
       var users = results['results'];
       for (user in users) {
-        //console.log(users[user]);
         var usuario = users[user];
         console.log('nombre: '+usuario.username+', pass:'+usuario.password);
       }
-
-      //var user = JSON.parse(results);
-      //console.log('Users -> '+user);
       client.release();
     } catch (err) {
       console.error(err);
