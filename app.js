@@ -24,6 +24,7 @@ const pool = new Pool({
   ssl: true
 });
 
+// Prueba consultas Postgresql
 app.get('/db', async (req, res) => {
   res.render("db");
     try {
@@ -72,12 +73,9 @@ app.post('/api/users', jsonParser, function (req, res) {
   if (!req.body)
     return res.sendStatus(400);
 });
-/*
-app.get('/login/:user/:password', function (req, res) {
-  res.send(req.params.user+" "+req.params.password);
-});*/
 
 app.get('/login/:user/:password', function (req, res) {
+  /*
   for (user in users) {
     if (req.params.user == user & req.params.password == users[user]) {
       var status = {"status":"OK"};
@@ -87,7 +85,31 @@ app.get('/login/:user/:password', function (req, res) {
   }
   var status = {};
   status = "ERROR";
-  res.send(JSON.stringify(status));
+  res.send(JSON.stringify(status));*/
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM usuarios');
+    const results = { 'results': (result) ? result.rows : null};
+
+    var users = results['results'];
+    for (user in users) {
+      var usuario = users[user];
+      if (req.params.user == usuario.username & req.params.password == usuario.password) {
+        var status = {"status":"OK"};
+        res.send(JSON.stringify(status));
+        return;
+      }
+      var status = {};
+      status = "ERROR";
+      res.send(JSON.stringify(status));
+      //console.log('nombre: '+usuario.username+', pass:'+usuario.password);
+    }
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
 });
 
 //Ruta '/' -> muestra la plantilla login.ejs (un input y un botón de submit)
