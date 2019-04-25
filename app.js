@@ -76,6 +76,7 @@ app.post('/api/users', jsonParser, function (req, res) {
 
 app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
   /*
+  // Busca los usuarios en la variable
   for (user in users) {
     if (req.params.user == user & req.params.password == users[user]) {
       var status = {"status":"OK"};
@@ -87,23 +88,23 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
   status = "ERROR";
   res.send(JSON.stringify(status));*/
 
+  // Buscar los usuarios en la base de datos PostgreSQL de Heroku
   try {
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM usuarios');
     const results = { 'results': (result) ? result.rows : null};
-
+    // Guardo los usuarios en esta variable
     var users = results['results'];
     for (user in users) {
       var usuario = users[user];
+      // Comprobamos si el nombre de usuario y la contraseña concuerdan con el introducido
       if (req.params.user == usuario.username & req.params.password == usuario.password) {
         var status = {"status":"OK"};
         res.send(JSON.stringify(status));
         return;
       }
-      var status = {};
-      status = "ERROR";
+      var status = {"status":"ERROR"};
       res.send(JSON.stringify(status));
-      //console.log('nombre: '+usuario.username+', pass:'+usuario.password);
     }
     client.release();
   } catch (err) {
