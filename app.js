@@ -74,7 +74,7 @@ app.post('/api/users', jsonParser, function (req, res) {
     return res.sendStatus(400);
 });
 
-app.get('/login/:user/:password', function (req, res) {
+app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
   /*
   for (user in users) {
     if (req.params.user == user & req.params.password == users[user]) {
