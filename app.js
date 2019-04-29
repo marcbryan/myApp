@@ -7,14 +7,16 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 //parse application/json
 var jsonParser = bodyParser.json();
 
+//CORS
+var cors = require('cors');
+app.use(cors());
+
 // Un diccionario de Usuarios (clave:valor)
 var users = {
   marc:"1234",
   prueba:"4567",
   root:"root"
 };
-
-var c = 0;
 
 app.set('view engine', 'ejs');
 
@@ -46,7 +48,7 @@ app.get('/db', async (req, res) => {
 
 // POST /login gets urlencoded bodies
 app.post('/login', urlencodedParser, function(req, res) {
-
+  var c = 0;
   if ((req.body.username == "") | (req.body.contra == "")) {
      res.send('Faltan campos por rellenar');
   } else {
@@ -76,7 +78,7 @@ app.post('/api/users', jsonParser, function (req, res) {
 
 app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
   /*
-  // Busca los usuarios en la variable
+  // Busca los usuarios en la variable 'users'
   for (user in users) {
     if (req.params.user == user & req.params.password == users[user]) {
       var status = {"status":"OK"};
@@ -84,8 +86,8 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
       return;
     }
   }
-  var status = {};
-  status = "ERROR";
+  var status = {"status":"ERROR"};
+  //status = "ERROR";
   res.send(JSON.stringify(status));*/
 
   // Buscar los usuarios en la base de datos PostgreSQL de Heroku
