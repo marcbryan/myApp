@@ -7,7 +7,7 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 //parse application/json
 var jsonParser = bodyParser.json();
 
-//CORS
+//CORS (para solucionar el error “No Access-Control-Allow-Origin header”)
 var cors = require('cors');
 app.use(cors());
 
@@ -87,7 +87,6 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
     }
   }
   var status = {"status":"ERROR"};
-  //status = "ERROR";
   res.send(JSON.stringify(status));*/
 
   var loginOK = false;
@@ -119,6 +118,11 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
   }
 });
 
+app.get('/login/:user/:password', function (req, res) { //async (req, res) => {
+  var status = req.param('status');
+  console.log("status:"+status);
+});
+
 //Ruta '/' -> muestra la plantilla login.ejs (un input y un botón de submit)
 app.get('/', function (req, res) {
   res.setHeader('Content-Type', 'text/plain');
@@ -138,6 +142,5 @@ app.get('/hola', function (req, res){
 });
 
 app.listen(process.env.PORT, function () {
-  console.log('Aplicación Heroku!')
-  //console.log('Example app listening on port 3000!');
+  console.log('Aplicación Heroku funcionando correctamente!');
 });
