@@ -90,6 +90,7 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
   //status = "ERROR";
   res.send(JSON.stringify(status));*/
 
+  var loginOK = false;
   // Buscar los usuarios en la base de datos PostgreSQL de Heroku
   try {
     const client = await pool.connect();
@@ -101,10 +102,13 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
       var usuario = users[user];
       // Comprobamos si el nombre de usuario y la contraseña concuerdan con el introducido
       if (req.params.user == usuario.username & req.params.password == usuario.password) {
+        loginOK = true;
         var status = {"status":"OK"};
         res.send(JSON.stringify(status));
         return;
       }
+    }
+    if (!loginOK){
       var status = {"status":"ERROR"};
       res.send(JSON.stringify(status));
     }
