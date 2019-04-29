@@ -119,8 +119,9 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
 });
 
 app.post('/login/:user/:password', function (req, res) { //async (req, res) => {
-  var status = req.param('status');
+  var status = req.body.status;
   console.log("status:"+status);
+  res.send(status);
 });
 
 //Ruta '/' -> muestra la plantilla login.ejs (un input y un botón de submit)
