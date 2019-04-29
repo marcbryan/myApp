@@ -118,7 +118,7 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
   }
 });
 
-app.get('/login/:user/:password', function (req, res) { //async (req, res) => {
+app.post('/login/:user/:password', function (req, res) { //async (req, res) => {
   var status = req.param('status');
   console.log("status:"+status);
 });
