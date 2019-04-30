@@ -26,7 +26,7 @@ const pool = new Pool({
   ssl: true
 });
 
-// Prueba consultas Postgresql
+// Ruta /db -> Muestra una lista con los usuarios que hay en la base de datos de PostgreSQL
 app.get('/db', async (req, res) => {
   res.render("db");
     try {
@@ -37,7 +37,8 @@ app.get('/db', async (req, res) => {
       var users = results['results'];
       for (user in users) {
         var usuario = users[user];
-        console.log('nombre: '+usuario.username+', pass:'+usuario.password);
+        var node = $("<li>"+usuario.username+":"+usuario.password+"</li>");
+        $("#list").append(node);
       }
       client.release();
     } catch (err) {
@@ -116,12 +117,6 @@ app.get('/login/:user/:password', async (req, res) => {//function (req, res) {
     console.error(err);
     res.send("Error " + err);
   }
-});
-
-app.post('/login/:user/:password', function (req, res) { //async (req, res) => {
-  console.log(JSON.stringify(req.body));
-  res.send(JSON.stringify(req.body));
-  //res.send(status);
 });
 
 //Ruta '/' -> muestra la plantilla login.ejs (un input y un botón de submit)
