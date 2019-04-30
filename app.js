@@ -12,10 +12,10 @@ var cors = require('cors');
 app.use(cors());
 
 // Para usar DOM en NodeJS
-global.document = new JSDOM(html).window.document;
-// Incluirlo en el proyecto
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+// Variable global 'document'
+global.document = new JSDOM(html).window.document;
 
 // Un diccionario de Usuarios (clave:valor)
 var users = {
