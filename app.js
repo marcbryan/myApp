@@ -11,6 +11,12 @@ var jsonParser = bodyParser.json();
 var cors = require('cors');
 app.use(cors());
 
+// Para usar DOM en NodeJS
+global.document = new JSDOM(html).window.document;
+// Incluirlo en el proyecto
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
 // Un diccionario de Usuarios (clave:valor)
 var users = {
   marc:"1234",
@@ -37,8 +43,9 @@ app.get('/db', async (req, res) => {
       var users = results['results'];
       for (user in users) {
         var usuario = users[user];
-        var node = $("<li>"+usuario.username+":"+usuario.password+"</li>");
-        $("#list").append(node);
+        var ul = document.getElementById("list");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(usuario.username+":"+usuario.password));
       }
       client.release();
     } catch (err) {
