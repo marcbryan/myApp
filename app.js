@@ -14,8 +14,6 @@ app.use(cors());
 // Para usar DOM en NodeJS
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-// Variable global 'document'
-global.document = new JSDOM("https://secret-chamber-67247.herokuapp.com").window.document;
 
 // Un diccionario de Usuarios (clave:valor)
 var users = {
@@ -35,6 +33,7 @@ const pool = new Pool({
 // Ruta /db -> Muestra una lista con los usuarios que hay en la base de datos de PostgreSQL
 app.get('/db', async (req, res) => {
   res.render("db");
+  var document = new JSDOM("https://secret-chamber-67247.herokuapp.com/db").window.document;
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
