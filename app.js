@@ -11,10 +11,6 @@ var jsonParser = bodyParser.json();
 var cors = require('cors');
 app.use(cors());
 
-// Para usar DOM en NodeJS
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-
 // Un diccionario de Usuarios (clave:valor)
 var users = {
   marc:"1234",
@@ -30,24 +26,14 @@ const pool = new Pool({
   ssl: true
 });
 
-// Ruta /db -> Muestra una lista con los usuarios que hay en la base de datos de PostgreSQL
+// Ruta /db -> Envía un JSON con los usuarios que hay en la base de datos de PostgreSQL
 app.get('/db', async (req, res) => {
-  res.render("db");
-  var html = JSDOM.fromURL('https://secret-chamber-67247.herokuapp.com/db').serialize();
-  const document = new JSDOM(html).window.document;
-  console.log(html);
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
       const results = { 'results': (result) ? result.rows : null};
-
       var users = results['results'];
-      for (user in users) {
-        var usuario = users[user];
-        var ul = document.getElementById("list");
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(usuario.username+":"+usuario.password));
-      }
+      res.send(JSON.stringify(users));
       client.release();
     } catch (err) {
       console.error(err);
