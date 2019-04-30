@@ -15,7 +15,7 @@ app.use(cors());
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 // Variable global 'document'
-global.document = new JSDOM(html).window.document;
+global.document = new JSDOM("https://secret-chamber-67247.herokuapp.com").window.document;
 
 // Un diccionario de Usuarios (clave:valor)
 var users = {
