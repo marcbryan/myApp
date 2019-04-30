@@ -33,8 +33,9 @@ const pool = new Pool({
 // Ruta /db -> Muestra una lista con los usuarios que hay en la base de datos de PostgreSQL
 app.get('/db', async (req, res) => {
   res.render("db");
-  const document = new JSDOM(JSDOM.fromURL('https://secret-chamber-67247.herokuapp.com/db')).window.document;
-  console.log(document);
+  var html = JSDOM.fromURL('https://secret-chamber-67247.herokuapp.com/db').serialize();
+  const document = new JSDOM(html).window.document;
+  console.log(html);
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM usuarios');
